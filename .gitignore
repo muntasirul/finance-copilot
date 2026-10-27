@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage*
+
+# Node / Tauri
+node_modules/
+apps/desktop/dist/
+apps/desktop/src-tauri/target/
+
+# Data & models (tracked via DVC / GitHub Releases, never git)
+data/raw/
+data/interim/
+data/processed/
+!data/**/.gitkeep
+models/*.onnx
+models/*.gguf
+models/*.bin
+models/*.safetensors
+models/*.pt
+mlruns/
+mlartifacts/
+
+# Secrets & local
+.env
+*.db
+*.sqlite
+*.sqlite3
+.kaggle/
+kaggle.json
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.log
