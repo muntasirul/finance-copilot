@@ -33,7 +33,8 @@ kaggle datasets create -p kaggle_dataset --dir-mode zip
 
 For each notebook on Kaggle:
 
-1. **New Notebook** → paste the notebook file contents (or upload the `.ipynb` directly).
+1. **New Notebook** → either upload the `.ipynb` **or** open the matching file in `py/`,
+   copy the whole thing, and paste it into a single code cell — it's self-contained.
 2. **Input → + Add Data** → search `fincopilot-synthetic-transactions` → add.
 3. **Settings → Accelerator**: GPU only for notebook 04; leave CPU for the rest.
 4. **Save & Run All** → wait → in the right-hand **Output** panel download `/kaggle/working/<name>/`.
