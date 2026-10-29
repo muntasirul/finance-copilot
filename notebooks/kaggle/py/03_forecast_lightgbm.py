@@ -18,7 +18,14 @@ import json
 from pathlib import Path
 import numpy as np, pandas as pd
 
-DATA = list(Path('/kaggle/input').glob('*/transactions.parquet'))[0]
+CANDS = sorted(Path('/kaggle/input').rglob('*.parquet'))
+if not CANDS:
+    present = sorted(str(p) for p in Path('/kaggle/input').rglob('*'))
+    raise FileNotFoundError(
+        'No .parquet found under /kaggle/input. Found:\n  ' + '\n  '.join(present[:50]) +
+        '\nAttach your dataset: right panel → Input → + Add Data → fincopilot-synthetic-transactions'
+    )
+DATA = CANDS[0]
 OUT = Path('/kaggle/working/forecast'); OUT.mkdir(parents=True, exist_ok=True)
 df = pd.read_parquet(DATA); df['date'] = pd.to_datetime(df['date'])
 df['signed'] = np.where(df.direction == 'debit', -df.amount, df.amount)

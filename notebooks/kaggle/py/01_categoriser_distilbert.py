@@ -18,9 +18,19 @@ from pathlib import Path
 import numpy as np, pandas as pd
 
 # ---------- locate input ----------
-CANDS = list(Path('/kaggle/input').glob('*/transactions.parquet'))
-assert CANDS, 'Add your dataset: Notebook → Input → + Add Data → fincopilot-synthetic-transactions'
+CANDS = sorted(Path('/kaggle/input').rglob('*.parquet'))
+if not CANDS:
+    present = sorted(str(p) for p in Path('/kaggle/input').rglob('*'))
+    raise FileNotFoundError(
+        'No .parquet file found under /kaggle/input.\n'
+        'Found: ' + '\n  '.join(present[:50]) + '\n'
+        'Fix: 1) Kaggle → Datasets → New Dataset → upload transactions.parquet\n'
+        '     2) In THIS notebook: right panel → Input → + Add Data → pick the dataset\n'
+        '     3) Re-run this cell.'
+    )
 DATA = CANDS[0]
+# ignore pandas' FutureWarning noise from sklearn internals below
+import warnings; warnings.filterwarnings('ignore', category=FutureWarning)
 OUT = Path('/kaggle/working/categoriser'); OUT.mkdir(parents=True, exist_ok=True)
 df = pd.read_parquet(DATA)
 print(DATA, len(df), 'rows,', df['persona'].nunique(), 'personas')
