@@ -86,7 +86,7 @@ full = np.zeros((len(test), len(labels))); full[:, base.classes_] = probs
 bp = base.classes_[probs.argmax(1)]
 baseline = {'macro_f1': float(f1_score(test.label, bp, average='macro')),
             'accuracy': float(accuracy_score(test.label, bp)),
-            'top3': float(top_k_accuracy_score(test.label, full, k=3)),
+            'top3': float(top_k_accuracy_score(test.label, full, k=3, labels=np.arange(len(labels)))),
             'ms_per_row': ms, 'fit_s': fit_s}
 print('BASELINE', json.dumps(baseline, indent=2))
 
@@ -131,7 +131,7 @@ e = np.exp(logits - logits.max(1, keepdims=True)); probs = e/e.sum(1, keepdims=T
 pred = probs.argmax(1); conf = probs.max(1)
 ours = {'macro_f1': float(f1_score(test.label, pred, average='macro')),
         'accuracy': float(accuracy_score(test.label, pred)),
-        'top3': float(top_k_accuracy_score(test.label, probs, k=3)),
+        'top3': float(top_k_accuracy_score(test.label, probs, k=3, labels=np.arange(len(labels)))),
         'ece': float(np.mean(np.abs(conf - (pred == test.label))))}
 print('DISTILBERT', json.dumps(ours, indent=2))
 print(classification_report(test.label, pred, target_names=[id2lab[i] for i in range(len(labels))], zero_division=0))

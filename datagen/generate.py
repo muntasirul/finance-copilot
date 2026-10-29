@@ -30,7 +30,9 @@ def _load(name: str) -> dict[str, Any]:
     return yaml.safe_load((HERE / name).read_text())
 
 
-def fmt_descriptor(rng: random.Random, template: str, merchant: str, dt: date) -> str:
+def fmt_descriptor(
+    rng: random.Random, template: str, merchant: str, dt: date, cities: list[str]
+) -> str:
     merchant_up = merchant.upper()
     return (
         template.replace("{merchant_short}", merchant_up[:12])
@@ -39,6 +41,7 @@ def fmt_descriptor(rng: random.Random, template: str, merchant: str, dt: date) -
         .replace("{terminal}", f"{rng.randint(1000, 9999)}")
         .replace("{num4}", f"{rng.randint(1000, 9999)}")
         .replace("{masked}", f"{rng.randint(10**9, 10**10 - 1)}")
+        .replace("{city}", rng.choice(cities))
         .replace("{date}", dt.strftime("%d/%m"))
     )
 
@@ -83,7 +86,10 @@ class Gen:
         recurring: bool = False,
         anomaly: str | None = None,
     ) -> float:
-        desc = fmt_descriptor(self.rng, self.rng.choice(bank["templates"]), merchant_key, dt)
+        desc = fmt_descriptor(
+            self.rng, self.rng.choice(bank["templates"]), merchant_key, dt,
+            self.templates["cities"],
+        )
         balance = round(balance - amount if direction == "debit" else balance + amount, 2)
         self.rows.append(
             {
