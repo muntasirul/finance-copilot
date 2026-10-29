@@ -134,7 +134,9 @@ ours = {'macro_f1': float(f1_score(test.label, pred, average='macro')),
         'top3': float(top_k_accuracy_score(test.label, probs, k=3, labels=np.arange(len(labels)))),
         'ece': float(np.mean(np.abs(conf - (pred == test.label))))}
 print('DISTILBERT', json.dumps(ours, indent=2))
-print(classification_report(test.label, pred, target_names=[id2lab[i] for i in range(len(labels))], zero_division=0))
+print(classification_report(test.label, pred, labels=np.arange(len(labels)),
+                            target_names=[id2lab[i] for i in range(len(labels))],
+                            zero_division=0))
 
 # ---------- export to int8 ONNX for the app ----------
 from optimum.onnxruntime import ORTModelForSequenceClassification, ORTQuantizer
