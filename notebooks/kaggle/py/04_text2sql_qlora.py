@@ -120,7 +120,10 @@ def to_chat(q, sql):
 ds = Dataset.from_pandas(pd.DataFrame({'text': [to_chat(r.q, r.sql) for r in tr.itertuples()]}))
 bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type='nf4',
                          bnb_4bit_compute_dtype=torch.float16)
-model = AutoModelForCausalLM.from_pretrained(MODEL, quantization_config=bnb, device_map='auto')
+# torch_dtype=float16 is REQUIRED on T4: Qwen defaults to bf16, and the fp16 GradScaler
+# can't unscale bf16 grads ("_amp_foreach_non_finite_check_and_unscale_cuda not implemented")
+model = AutoModelForCausalLM.from_pretrained(MODEL, quantization_config=bnb,
+                                             torch_dtype=torch.float16, device_map='auto')
 model = prepare_model_for_kbit_training(model)
 model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05,
     target_modules=['q_proj','k_proj','v_proj','o_proj','gate_proj','up_proj','down_proj'],
