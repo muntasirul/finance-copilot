@@ -153,6 +153,11 @@ q = ORTQuantizer.from_pretrained(ort_dir)
 qconf = AutoQuantizationConfig.avx2(is_static=False, per_channel=False)
 q.quantize(save_dir=OUT, quantization_config=qconf)
 tok.save_pretrained(OUT)
+# optimum >=1.21 names it model_quantized.onnx; the app expects model.onnx
+produced = list(OUT.glob('*.onnx'))
+assert produced, f'no .onnx produced in {OUT}: {list(OUT.iterdir())}'
+if (OUT/'model.onnx') not in produced:
+    produced[0].rename(OUT/'model.onnx')
 print('ONNX size MB:', round((OUT/'model.onnx').stat().st_size/1e6, 1))
 
 # ---------- ONNX smoke test (must match repo infer.py behaviour) ----------
