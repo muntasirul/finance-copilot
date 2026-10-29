@@ -12,6 +12,9 @@ import subprocess, sys
 subprocess.run([sys.executable, '-m', 'pip', 'install', '-q',
                 'transformers>=4.43', 'datasets>=2.20', 'onnx>=1.16', 'onnxruntime>=1.18',
                 'optimum[onnxruntime]>=1.21', 'evaluate', 'pyarrow', 'scikit-learn'], check=True)
+# Kaggle's image ships a diffusers build incompatible with its huggingface_hub version,
+# which crashes optimum's ONNX exporter. We don't use diffusers — remove it.
+subprocess.run([sys.executable, '-m', 'pip', 'uninstall', '-y', '-q', 'diffusers'], check=False)
 
 import os, json, math, re, unicodedata
 from pathlib import Path
