@@ -45,7 +45,7 @@ class GenericPDFParser(StatementParser):
             return 0.0
         try:
             tables = self._tables(path)
-        except Exception:  # noqa: BLE001
+        except Exception:
             return 0.0
         for t in tables:
             if t and _find(t[0], DATE_COLS) and _find(t[0], DESC_COLS):

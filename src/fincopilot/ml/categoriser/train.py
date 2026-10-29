@@ -29,11 +29,11 @@ from fincopilot.taxonomy import LABEL2ID
 
 def load_split(data_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     df = pd.read_parquet(data_dir / "synthetic" / "transactions.parquet")
-    # split by persona so we measure generalisation to unseen users
-    personas = sorted(df["persona"].unique())
-    test_personas = set(personas[:: max(1, len(personas) // 4)])  # ~25%
-    test = df[df["persona"].isin(test_personas)]
-    train = df[~df["persona"].isin(test_personas)]
+    # split by account so we measure generalisation to unseen users (~25%)
+    accounts = sorted(df["account_id"].unique())
+    test_accounts = set(accounts[:: max(1, len(accounts) // 4)])
+    test = df[df["account_id"].isin(test_accounts)]
+    train = df[~df["account_id"].isin(test_accounts)]
     return train, test
 
 
@@ -59,7 +59,9 @@ def main() -> None:
         [
             (
                 "tfidf",
-                TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 5), min_df=2, sublinear_tf=True),
+                TfidfVectorizer(
+                    analyzer="char_wb", ngram_range=(2, 5), min_df=2, sublinear_tf=True
+                ),
             ),
             ("clf", LogisticRegression(max_iter=2000, C=4.0, class_weight="balanced")),
         ]
@@ -79,8 +81,8 @@ def main() -> None:
         "top3_accuracy": float(top_k_accuracy_score(y_te, probs, k=3, labels=pipe.classes_)),
         "ms_per_row": ms_per_row,
         "fit_seconds": fit_s,
-        "n_train": int(len(x_tr)),
-        "n_test": int(len(x_te)),
+        "n_train": len(x_tr),
+        "n_test": len(x_te),
     }
     print(json.dumps(metrics, indent=2))
     print(classification_report(y_te, pred, zero_division=0))

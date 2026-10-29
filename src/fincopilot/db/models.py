@@ -28,19 +28,19 @@ class Base(DeclarativeBase):
     pass
 
 
-class Direction(str, enum.Enum):
+class Direction(enum.StrEnum):
     debit = "debit"
     credit = "credit"
 
 
-class LabelSource(str, enum.Enum):
+class LabelSource(enum.StrEnum):
     model = "model"
     user = "user"
     rule = "rule"
     import_ = "import"
 
 
-class AlertKind(str, enum.Enum):
+class AlertKind(enum.StrEnum):
     duplicate_charge = "duplicate_charge"
     amount_spike = "amount_spike"
     new_merchant_burst = "new_merchant_burst"

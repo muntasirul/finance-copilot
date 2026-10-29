@@ -21,11 +21,14 @@ data/raw/
 data/interim/
 data/processed/
 !data/**/.gitkeep
+kaggle_dataset/
 models/*.onnx
 models/*.gguf
 models/*.bin
 models/*.safetensors
 models/*.pt
+models/*.pkl
+models/*.npy
 mlruns/
 mlartifacts/
 

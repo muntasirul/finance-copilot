@@ -1,0 +1,51 @@
+# Bank descriptor templates. {merchant} is replaced by the canonical name (upper-cased /
+# truncated per profile). {ref} {terminal} {city} {num4} {date} {masked} are randomised.
+# The point: the same merchant looks completely different across banks — that's what makes
+# real-world categorisation hard.
+
+banks:
+  retailbank_us:
+    country: US
+    templates:
+      - "POS DEBIT {terminal} {merchant} {city} {date}"
+      - "CARD PURCHASE {merchant} {city} US {ref}"
+      - "DEBIT PURCHASE -VISA {merchant} {city} {masked}"
+      - "ACH DEBIT {merchant} {ref}"
+      - "PAYMENT TO {merchant} REF {ref}"
+      - "CHECKCARD {merchant} {date} {ref}"
+      - "ONLINE TRANSFER {merchant}"
+      - "AUTOPAY {merchant} {ref}"
+
+  citybank_uk:
+    country: UK
+    templates:
+      - "CARD PAYMENT TO {merchant}, {city} ON {date}"
+      - "{merchant} {city} GBR CARD NO {masked}"
+      - "DD {merchant} {ref}"
+      - "FPO PAYMENT {merchant} {ref}"
+      - "VISA DEBIT {merchant} {city}"
+      - "BANK GIRO CREDIT REF {merchant}"
+      - "CASH WITHDRAWAL {merchant} {city}"
+
+  southbank_bd:
+    country: BD
+    templates:
+      - "POS {terminal} DHK*{merchant_short} {date}"
+      - "BKASH PAYMENT {masked} REF {ref}"
+      - "NAGAD {merchant_short} {ref}"
+      - "TRX/{merchant_short}/{ref}"
+      - "EFT {merchant_short} {ref}"
+      - "CDM WITHDRAWAL {merchant_short}"
+      - "SBL*{merchant_short} {city}"
+
+  globalbank_intl:
+    country: US
+    templates:
+      - "{merchant} PURCHASE {city} {ref}"
+      - "ECOM TXN {merchant} REF#{ref}"
+      - "INTL TXN {merchant} {city}"
+      - "RECURRING DEBIT {merchant} {masked}"
+      - "{merchant} POS {terminal} {date}"
+      - "MOBILE PAYMENT {merchant} {ref}"
+
+cities: [DHAKA, DHK, NEW YORK, CHICAGO, AUSTIN, LONDON, SEATTLE, MIAMI, DENVER, SAN DIEGO]

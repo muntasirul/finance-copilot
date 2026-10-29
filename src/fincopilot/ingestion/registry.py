@@ -29,7 +29,7 @@ class ParserRegistry:
         for ep in entry_points(group=ENTRY_POINT_GROUP):
             try:
                 self.register(ep.load()())
-            except Exception:  # noqa: BLE001
+            except Exception:
                 log.exception("failed to load parser plugin %s", ep.name)
 
     def load_directory(self, directory: Path) -> None:
@@ -44,7 +44,7 @@ class ParserRegistry:
             try:
                 spec.loader.exec_module(module)
                 self.register(module.PARSER)
-            except Exception:  # noqa: BLE001
+            except Exception:
                 log.exception("failed to load user parser %s", file)
 
     def detect(self, path: Path) -> tuple[StatementParser, float] | None:
@@ -53,7 +53,7 @@ class ParserRegistry:
         for p in self._parsers.values():
             try:
                 score = p.detect(path)
-            except Exception:  # noqa: BLE001
+            except Exception:
                 log.debug("detect() raised in %s", p.name, exc_info=True)
                 continue
             if score >= DETECT_THRESHOLD and (best is None or score > best[1]):

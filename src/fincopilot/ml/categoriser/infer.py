@@ -73,7 +73,7 @@ class SklearnCategoriser:
 
     def __init__(self, path: Path, threshold: float):
         with (path / "pipeline.pkl").open("rb") as f:
-            self.pipeline = pickle.load(f)  # noqa: S301 — local trusted artifact
+            self.pipeline = pickle.load(f)
         meta = json.loads((path / "meta.json").read_text())
         self.version = meta.get("version", "sklearn-unknown")
         self.threshold = threshold

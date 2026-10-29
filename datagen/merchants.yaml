@@ -1,0 +1,195 @@
+# Merchant catalogue: subcategory -> list of merchants.
+# name: canonical merchant string (templates mutate it per bank)
+# amount: typical transaction range [min, max]
+# weight: relative frequency among same-subcategory merchants
+# subscription: if set, the merchant bills on a fixed cadence {amount, cadence_days}
+
+groceries:
+  - {name: "walmart", amount: [18, 140], weight: 30}
+  - {name: "target", amount: [12, 110], weight: 15}
+  - {name: "aldi", amount: [15, 90], weight: 15}
+  - {name: "costco", amount: [60, 320], weight: 10}
+  - {name: "tesco", amount: [10, 95], weight: 10}
+  - {name: "lidl", amount: [12, 80], weight: 8}
+  - {name: "whole foods", amount: [25, 160], weight: 7}
+  - {name: "kroger", amount: [14, 100], weight: 5}
+
+restaurants:
+  - {name: "mcdonalds", amount: [6, 24], weight: 15}
+  - {name: "starbucks", amount: [4, 18], weight: 15}
+  - {name: "chipotle", amount: [9, 28], weight: 10}
+  - {name: "subway", amount: [6, 20], weight: 8}
+  - {name: "dominos", amount: [12, 40], weight: 8}
+  - {name: "kfc", amount: [8, 30], weight: 8}
+  - {name: "olive garden", amount: [30, 90], weight: 5}
+  - {name: "sushi bar", amount: [25, 85], weight: 5}
+  - {name: "pizza hut", amount: [14, 45], weight: 6}
+  - {name: "dunkin", amount: [4, 15], weight: 10}
+  - {name: "local diner", amount: [12, 55], weight: 10}
+
+cafes:
+  - {name: "blue bottle", amount: [4, 16], weight: 20}
+  - {name: "peets coffee", amount: [4, 14], weight: 20}
+  - {name: "costa coffee", amount: [3, 12], weight: 20}
+  - {name: "tim hortons", amount: [3, 13], weight: 20}
+  - {name: "independent cafe", amount: [3, 15], weight: 20}
+
+food_delivery:
+  - {name: "doordash", amount: [14, 55], weight: 25}
+  - {name: "uber eats", amount: [15, 60], weight: 25}
+  - {name: "grubhub", amount: [12, 50], weight: 15}
+  - {name: "deliveroo", amount: [15, 55], weight: 15}
+  - {name: "instacart", amount: [30, 120], weight: 20}
+
+fuel:
+  - {name: "shell", amount: [25, 85], weight: 25}
+  - {name: "bp", amount: [22, 80], weight: 20}
+  - {name: "chevron", amount: [25, 90], weight: 20}
+  - {name: "exxon", amount: [20, 75], weight: 20}
+  - {name: "arco", amount: [18, 70], weight: 15}
+
+ride_hailing:
+  - {name: "uber", amount: [7, 45], weight: 45}
+  - {name: "lyft", amount: [8, 48], weight: 35}
+  - {name: "bolt", amount: [6, 40], weight: 20}
+
+public_transit:
+  - {name: "metro transit", amount: [1.5, 6], weight: 40}
+  - {name: "bart", amount: [2, 12], weight: 20}
+  - {name: "mta", amount: [1.5, 6], weight: 20}
+  - {name: "amtrak", amount: [15, 90], weight: 20}
+
+streaming:
+  - {name: "netflix", amount: [15.49, 15.49], weight: 30, subscription: {cadence_days: 30}}
+  - {name: "spotify", amount: [10.99, 10.99], weight: 25, subscription: {cadence_days: 30}}
+  - {name: "youtube premium", amount: [13.99, 13.99], weight: 10, subscription: {cadence_days: 30}}
+  - {name: "disney plus", amount: [13.99, 13.99], weight: 10, subscription: {cadence_days: 30}}
+  - {name: "hulu", amount: [7.99, 7.99], weight: 10, subscription: {cadence_days: 30}}
+  - {name: "amazon prime", amount: [14.99, 14.99], weight: 15, subscription: {cadence_days: 30}}
+
+gaming:
+  - {name: "steam", amount: [5, 70], weight: 35}
+  - {name: "playstation store", amount: [10, 80], weight: 25}
+  - {name: "nintendo eshop", amount: [5, 60], weight: 20}
+  - {name: "xbox store", amount: [10, 80], weight: 20}
+
+clothing:
+  - {name: "hm", amount: [15, 90], weight: 15}
+  - {name: "zara", amount: [20, 140], weight: 15}
+  - {name: "uniqlo", amount: [15, 120], weight: 15}
+  - {name: "nike", amount: [30, 200], weight: 15}
+  - {name: "old navy", amount: [15, 80], weight: 10}
+  - {name: "shein", amount: [15, 70], weight: 15}
+  - {name: "macys", amount: [25, 180], weight: 15}
+
+electronics:
+  - {name: "best buy", amount: [30, 800], weight: 25}
+  - {name: "apple store", amount: [99, 1500], weight: 15}
+  - {name: "micro center", amount: [25, 600], weight: 20}
+  - {name: "samsung", amount: [60, 900], weight: 15}
+  - {name: "newegg", amount: [30, 500], weight: 25}
+
+online_marketplace:
+  - {name: "amazon", amount: [10, 220], weight: 50}
+  - {name: "ebay", amount: [8, 160], weight: 20}
+  - {name: "aliexpress", amount: [5, 80], weight: 15}
+  - {name: "etsy", amount: [10, 120], weight: 15}
+
+home_goods:
+  - {name: "ikea", amount: [20, 350], weight: 30}
+  - {name: "home depot", amount: [15, 300], weight: 30}
+  - {name: "lowes", amount: [15, 250], weight: 20}
+  - {name: "wayfair", amount: [30, 400], weight: 20}
+
+pharmacy:
+  - {name: "cvs", amount: [8, 90], weight: 35}
+  - {name: "walgreens", amount: [8, 85], weight: 35}
+  - {name: "rite aid", amount: [6, 70], weight: 15}
+  - {name: "boots", amount: [8, 80], weight: 15}
+
+doctor:
+  - {name: "city clinic", amount: [30, 220], weight: 60}
+  - {name: "dental care", amount: [60, 400], weight: 40}
+
+gym:
+  - {name: "planet fitness", amount: [24.99, 24.99], weight: 40, subscription: {cadence_days: 30}}
+  - {name: "ymca", amount: [45, 45], weight: 30, subscription: {cadence_days: 30}}
+  - {name: "la fitness", amount: [39.99, 39.99], weight: 30, subscription: {cadence_days: 30}}
+
+education:
+  - {name: "udemy", amount: [12, 60], weight: 35}
+  - {name: "coursera", amount: [49, 49], weight: 25, subscription: {cadence_days: 30}}
+  - {name: "skillshare", amount: [13.99, 13.99], weight: 20, subscription: {cadence_days: 30}}
+  - {name: "pluralsight", amount: [29, 29], weight: 20, subscription: {cadence_days: 30}}
+
+bank_fee:
+  - {name: "monthly service fee", amount: [5, 15], weight: 70}
+  - {name: "overdraft fee", amount: [35, 35], weight: 30}
+
+cash_withdrawal:
+  - {name: "atm withdrawal", amount: [20, 300], weight: 100}
+
+p2p:
+  - {name: "venmo", amount: [10, 200], weight: 40}
+  - {name: "zelle", amount: [15, 300], weight: 30}
+  - {name: "paypal", amount: [10, 250], weight: 30}
+
+flights:
+  - {name: "delta", amount: [120, 700], weight: 25}
+  - {name: "united", amount: [130, 800], weight: 25}
+  - {name: "ryanair", amount: [30, 250], weight: 25}
+  - {name: "southwest", amount: [80, 450], weight: 25}
+
+hotels:
+  - {name: "marriott", amount: [90, 420], weight: 30}
+  - {name: "hilton", amount: [95, 450], weight: 30}
+  - {name: "airbnb", amount: [70, 380], weight: 40}
+
+utilities_electric:
+  - {name: "city electric", amount: [60, 260], weight: 100}
+
+internet:
+  - {name: "comcast xfinity", amount: [40, 120], weight: 40}
+  - {name: "verizon fios", amount: [45, 110], weight: 30}
+  - {name: "att internet", amount: [40, 100], weight: 30}
+
+phone:
+  - {name: "tmobile", amount: [20, 120], weight: 35}
+  - {name: "verizon wireless", amount: [25, 140], weight: 35}
+  - {name: "att wireless", amount: [25, 130], weight: 30}
+
+insurance_other:
+  - {name: "geico", amount: [80, 220], weight: 50, subscription: {cadence_days: 30}}
+  - {name: "state farm", amount: [85, 240], weight: 50, subscription: {cadence_days: 30}}
+
+charity:
+  - {name: "red cross", amount: [10, 100], weight: 50}
+  - {name: "local food bank", amount: [10, 80], weight: 50}
+
+gifts:
+  - {name: "gift card shop", amount: [15, 150], weight: 60}
+  - {name: "florist", amount: [25, 120], weight: 40}
+
+# pseudo-keys: subscription buckets referenced by personas.yaml. `sub` is the real taxonomy
+# subcategory the transaction lands in (the key itself is not a subcategory).
+icloud:
+  - {name: "icloud", amount: [2.99, 2.99], weight: 100, subscription: {cadence_days: 30}, sub: streaming}
+adobe_cc:
+  - {name: "adobe creative cloud", amount: [59.99, 59.99], weight: 100, subscription: {cadence_days: 30}, sub: software}
+github_copilot:
+  - {name: "github copilot", amount: [10, 10], weight: 100, subscription: {cadence_days: 30}, sub: software}
+aws:
+  - {name: "amazon web services", amount: [15, 120], weight: 100, subscription: {cadence_days: 30}, sub: software}
+figma:
+  - {name: "figma", amount: [15, 15], weight: 100, subscription: {cadence_days: 30}, sub: software}
+gym_membership:
+  - {name: "planet fitness", amount: [24.99, 24.99], weight: 100, subscription: {cadence_days: 30}, sub: gym}
+youtube_premium:
+  - {name: "youtube premium", amount: [13.99, 13.99], weight: 100, subscription: {cadence_days: 30}, sub: streaming}
+
+refund:
+  - {name: "refund", amount: [5, 120], weight: 100}
+interest:
+  - {name: "interest credit", amount: [0.5, 15], weight: 100}
+loan_payment:
+  - {name: "student loan servicer", amount: [180, 450], weight: 100}

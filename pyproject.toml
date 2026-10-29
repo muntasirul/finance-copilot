@@ -74,11 +74,15 @@ packages = ["src/fincopilot"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["src", "tests", "datagen"]
+src = ["src", "tests", "datagen", "scripts"]
+extend-exclude = ["notebooks", "kaggle_dataset", "apps/desktop/node_modules"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "SIM", "RUF"]
 ignore = ["RUF012"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/fincopilot/api/*.py" = ["B008"]  # FastAPI idiom: Depends()/File() in defaults
 
 [tool.mypy]
 python_version = "3.11"

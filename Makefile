@@ -25,7 +25,8 @@ test:
 	$(PY) pytest
 
 datagen:
-	$(PY) python -m datagen.generate --out data/processed/synthetic --personas 12 --months 24 --seed 42
+	$(PY) python -m datagen.generate --out data/processed/synthetic \
+		--kaggle-out kaggle_dataset --months 24 --seed 42
 
 download-data:
 	$(PY) python scripts/download_datasets.py

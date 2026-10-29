@@ -63,7 +63,12 @@ def make_engine(db_path: Path | str | None = None, passphrase: str | None = None
 
         return engine
 
-    engine = create_engine(f"sqlite:///{path}", future=True)
+    engine_kwargs: dict = {"future": True, "connect_args": {"check_same_thread": False}}
+    if str(path) == ":memory:":
+        from sqlalchemy.pool import StaticPool
+
+        engine_kwargs["poolclass"] = StaticPool  # one shared in-memory connection across threads
+    engine = create_engine(f"sqlite:///{path}", **engine_kwargs)
 
     @event.listens_for(engine, "connect")
     def _pragmas(dbapi_conn, _record):  # type: ignore[no-untyped-def]

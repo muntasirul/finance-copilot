@@ -1,0 +1,46 @@
+# Persona profiles. Amounts are in the persona's currency per month unless noted.
+# spend_monthly = expected debit total; the generator samples daily spend to hit it.
+
+salaried:
+  count: 4                       # number of accounts generated with this profile
+  income: {amount: 4200, day_of_month: 28, jitter_days: 1, subcategory: salary, merchant: "ACME PAYROLL"}
+  rent: {amount: 1400, day_of_month: 3, subcategory: rent}
+  subscriptions: [netflix, spotify, icloud, gym_membership]
+  spend_monthly: [2200, 3200]    # uniform range
+  daily_spend_mu: 65             # lognormal params for a debit transaction
+  daily_spend_sigma: 0.85
+  txn_per_month: [70, 110]
+  utilities: {utilities_electric: 120, internet: 60, phone: 45}
+
+student:
+  count: 3
+  income: {amount: 900, day_of_month: 15, jitter_days: 3, subcategory: other_income, merchant: "BANK INTEREST REFUND"}
+  rent: {amount: 420, day_of_month: 5, subcategory: rent}
+  subscriptions: [spotify, youtube_premium]
+  spend_monthly: [650, 1100]
+  daily_spend_mu: 28
+  daily_spend_sigma: 0.9
+  txn_per_month: [45, 80]
+  utilities: {internet: 35, phone: 20}
+
+freelancer:
+  count: 3
+  income: {amount: 3800, day_of_month: null, jitter_days: 10, subcategory: freelance, merchant: "UPWORK TRANSFER"}   # irregular, ~monthly-ish
+  rent: {amount: 950, day_of_month: 4, subcategory: rent}
+  subscriptions: [adobe_cc, github_copilot, aws, figma]
+  spend_monthly: [1800, 2900]
+  daily_spend_mu: 55
+  daily_spend_sigma: 1.0
+  txn_per_month: [55, 95]
+  utilities: {utilities_electric: 90, internet: 70, phone: 50}
+
+family:
+  count: 2
+  income: {amount: 6800, day_of_month: 26, jitter_days: 1, subcategory: salary, merchant: "CORP PAYROLL"}
+  rent: {amount: 1900, day_of_month: 2, subcategory: mortgage}
+  subscriptions: [netflix, spotify, icloud, amazon_prime, disney_plus]
+  spend_monthly: [3400, 4600]
+  daily_spend_mu: 95
+  daily_spend_sigma: 0.8
+  txn_per_month: [95, 140]
+  utilities: {utilities_electric: 210, internet: 65, phone: 110}
