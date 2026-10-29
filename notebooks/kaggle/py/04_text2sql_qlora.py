@@ -153,11 +153,13 @@ def guard(sql_text):
 
 def generate(q, max_new=180):
     msgs = [{'role':'system','content':SYSTEM},{'role':'user','content':q}]
-    x = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt').to(model.device)
+    # return_dict → BatchEncoding {input_ids, attention_mask}; pass **x to generate()
+    x = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt',
+                                return_dict=True).to(model.device)
     with torch.no_grad():
-        y = model.generate(x, max_new_tokens=max_new, do_sample=False,
+        y = model.generate(**x, max_new_tokens=max_new, do_sample=False,
                            eos_token_id=tok.eos_token_id, pad_token_id=tok.pad_token_id)
-    return tok.decode(y[0][x.shape[1]:], skip_special_tokens=True)
+    return tok.decode(y[0][x['input_ids'].shape[1]:], skip_special_tokens=True)
 
 ok = 0; fails = []
 for r in te.itertuples():
