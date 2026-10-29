@@ -129,9 +129,12 @@ model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05,
     target_modules=['q_proj','k_proj','v_proj','o_proj','gate_proj','up_proj','down_proj'],
     task_type='CAUSAL_LM'))
 trainer = SFTTrainer(model=model, train_dataset=ds, processing_class=tok,
+    # fp16/bf16 OFF: the GradScaler can't unscale bf16-typed LoRA grads on T4
+    # ("_amp_foreach_non_finite_check_and_unscale_cuda not implemented for 'BFloat16'").
+    # 4-bit bnb doesn't need AMP — it manages its own compute dtype.
     args=SFTConfig(output_dir=str(OUT/'ckpt'), num_train_epochs=2, per_device_train_batch_size=8,
         gradient_accumulation_steps=4, learning_rate=2e-4, lr_scheduler_type='cosine',
-        logging_steps=20, save_strategy='no', report_to=[], fp16=True,
+        logging_steps=20, save_strategy='no', report_to=[], fp16=False, bf16=False,
         dataset_text_field='text', max_length=1024, packing=True))
 trainer.train()
 model.save_pretrained(OUT/'adapter'); tok.save_pretrained(OUT/'adapter')
